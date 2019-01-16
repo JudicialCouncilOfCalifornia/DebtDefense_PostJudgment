@@ -1,0 +1,143 @@
+modules:
+  - docassemble.base.util
+---
+metadata:
+  title: Claim of Exemption Bank Levy
+---
+mandatory: True
+code: |
+  need (get_started, defendant_full_name, county_name, where_to_send, not_judgment_debtor, exempt_prop, exemption_statute)
+
+---
+Mandatory: True
+
+field: get_started
+question: |
+ Has your bank account been frozen to collect a debt? 
+ Click to complete the form to tell the court and your creditor that the money in your bank account is protected. 
+continue button label: Get Started
+---
+question: |
+  Defendant Information
+subquestion: |
+  Please enter your full name, address, and phone number (and email address if you would like to provide it)
+fields:
+- Defendant Full Name: defendant_full_name
+- Defendant Address: defendant_address
+- Defendant Phone: defendant_phone
+- Defendant Email: defendant_email 
+  datatype: email 
+  required: false 
+continue button label: Continue
+---
+question: | 
+  Case Information
+subquestion: |
+  Please enter the information about your case from the wage garnishment order.
+fields:
+- County Name: county_name
+# we should be able to autofill the court info - can we make those global variables or autofill when you select the county?
+- Court street address: court_address
+- Court city, state & zip code: court_address2
+- Court branch, if applicable: court_branch
+  required: False 
+- Plaintiff name: plaintiff_name
+- Levying Officer File No.: levy_number
+- Case No.: case_number
+
+continue button label: continue
+---
+mandatory: true
+
+question: |
+  Are the Defendant in this case? Sometimes property is levied even if you are not involved in the lawsuit. In that case, you should file a third-party claim of exemption. 
+subquestion: |  
+  Do you need to tell the court about someone else who should be responsible for this debt?
+fields:
+  - "Click yes if you have the contact information for the Defendant named in this lawsuit": not_judgment_debtor
+    datatype: yesnoradio
+  - "The name and address (if known) of the debtor is": jd_name_address
+    show if: not_judgment_debtor
+    
+continue button: continue 
+---
+mandatory: True 
+question: | 
+  Property you claim as exempt:
+fields: 
+  Describe the property you claim as exempt: exempt_prop
+
+continue button: continue
+---
+---
+mandatory: True
+question: |
+  In order to claim your property as exempt, you need to list the law that says it cannot be levied.
+subquestion: |
+  Please select among the following common exemptions or fill in your own from the form EJ-155: 
+field: exemption_statute
+dropdown: 
+  - Social Security Benefits 47 US Sec. 407 
+  - Disability Benefits CCP 704.130
+  - Private Retirement Benefits or Pension CCP 704.115
+  - Public Retirement Benefits or Pension CCP 704.110
+  - Charity CCP 704.170
+  - Welfare Payments CCP 704.170
+  - Unemployment Benefits CCP 704.120 
+  - Workers Compensation CCP 704.160
+  - Student Financial Aid CCP 704.190
+  - Personal Injury Damages CCP 704.140
+  - Wages necessary to support you and your family CCP 706.051
+  - Other  
+
+continue button: Continue   
+
+continue button: complete my form
+---
+Mandatory: True
+
+question: |
+  Where should the court send followup paperwork for this claim of exemption?
+fields:
+- "Where should the court send followup paperwork for this claim of exemption?": where_to_send
+  datatype: combobox
+  choices:
+    - me at the address I provided: me_address
+    - my attorney: atty_address
+    - me at a new address: new_address 
+- "If you answered new address, please provide that information:": new_address
+  show if:
+    variable: where_to_send
+    is: new_address 
+
+continue button label: continue  
+
+---
+mandatory: True
+question: |
+  Here is your PDF form for your Claim of Exemption. Print this, sign and date it, and make two copies. Keep one copy for your records and submit the original and a copy to the sheriff's office.
+attachment:
+  name: Bank Levy Claim of Exemption
+  filename: bank_levy_coe
+  pdf template file: ej160_decrypted.pdf
+  fields:
+    - FillText25: ${ defendant_full_name }
+    - FillText180: ${ defendant_address }
+    - FillText26: ${ defendant_phone }
+    - FillText30: ${ defendant_email }
+    - FillText34: In Pro Per 
+    - FillText38: ${ county_name }
+    - FillText51: ${ court_address }
+    - FillText59: ${ court_address2 }
+    - FillText63: ${ court_branch }
+    - FillText75: ${ levy_number }
+    - FillText71: ${ defendant_full_name }
+    - FillText67: ${ plaintiff_name }
+    - FillText79: ${ case_number }
+    - FillText83: ${ defendant_full_name }
+
+mandatory: true 
+---
+question: |
+  Process exited
+sets: do_exit
