@@ -6,7 +6,7 @@ metadata:
 ---
 mandatory: True
 code: |
-  need (get_started, defendant_full_name, county_name, where_to_send, not_judgment_debtor, exempt_prop, exemption_statute)
+  need (get_started, defendant_full_name, county_name, where_to_send, exempt_prop, exemption_statute, pers_prop, exempt_facts)
 
 ---
 Mandatory: True
@@ -75,24 +75,68 @@ question: |
   In order to claim your property as exempt, you need to list the law that says it cannot be levied.
 subquestion: |
   Please select among the following common exemptions or fill in your own from the form EJ-155: 
-field: exemption_statute
-dropdown: 
-  - Social Security Benefits 47 US Sec. 407 
-  - Disability Benefits CCP 704.130
-  - Private Retirement Benefits or Pension CCP 704.115
-  - Public Retirement Benefits or Pension CCP 704.110
-  - Charity CCP 704.170
-  - Welfare Payments CCP 704.170
-  - Unemployment Benefits CCP 704.120 
-  - Workers Compensation CCP 704.160
-  - Student Financial Aid CCP 704.190
-  - Personal Injury Damages CCP 704.140
-  - Wages necessary to support you and your family CCP 706.051
-  - Other  
+fields: 
+  - "Kind of Property & Exemption": exemption_statute
+    datatype: dropdown
+    choices: 
+    - Social Security Benefits 47 US Sec. 407 
+    - Disability Benefits CCP 704.130
+    - Private Retirement Benefits or Pension CCP 704.115
+    - Public Retirement Benefits or Pension CCP 704.110
+    - Charity CCP 704.170
+    - Welfare Payments CCP 704.170
+    - Unemployment Benefits CCP 704.120 
+    - Workers Compensation CCP 704.160
+    - Student Financial Aid CCP 704.190
+    - Personal Injury Damages CCP 704.140
+    - Wages necessary to support you and your family CCP 706.051
+    - Other  
+  - "Other statute": other_statute
+    show if:
+      variable: exemption_statute
+      is: Other
+  
+continue button: Continue  
+---
+mandatory: True
+question: |
+fields:
+- What are the facts which support your request for a claim of exemption?: exempt_facts
 
-continue button: Continue   
+continue button: Continue
+---
+Mandatory: True 
+question: | 
+ The property I claim as exempt is a bank account: 
+yesno: pers_prop 
 
-continue button: complete my form
+continue button: Continue 
+ ---
+Mandatory: True 
+question: | 
+ The property I claim as exempt is a motor vehicle or proceeds from the sale of one: 
+yesno: motor_vehicle
+#  show if:
+#      variable: pers_prop
+#      is: no
+# these should be on the same page as pers_prop question
+
+continue button: Continue
+---
+Mandatory: True 
+question: | 
+ The property I claim as exempt is tools of the trade or other things I use for work: 
+yesno: work_tools
+continue button: Continue
+---
+Mandatory: True 
+question: | 
+ The property I claim as exempt is a life insurance policy or proceeds from one: 
+yesno: life_ins
+# continue button: Continue
+continue button: Complete my form
+
+# continue button: complete my form
 ---
 Mandatory: True
 
@@ -135,6 +179,11 @@ attachment:
     - FillText67: ${ plaintiff_name }
     - FillText79: ${ case_number }
     - FillText83: ${ defendant_full_name }
+    - FillText87: ${ jd_name_address }
+    - FillText8778: ${ where_to_send }
+    - FillText91: ${ exempt_prop }
+    - FillText95: ${ exemption_statute }
+    - FillText9598: ${ exempt_facts }
 
 mandatory: true 
 ---
