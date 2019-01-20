@@ -1,0 +1,658 @@
+---
+modules:
+	- docassemble.base.util
+---
+initial: True
+code: |
+  import datetime
+  import types
+  class FalseBoolean(object):
+    def primitive_value(self):
+      return False
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return False
+    def logical_and(self, arg):
+      return self
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (TrueBoolean() if arg.__nonzero__() else self)
+    def logical_not(self):
+      return TrueBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else TrueBoolean())
+  class TrueBoolean(object):
+    def primitive_value(self):
+      return True
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return True
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+    def logical_or(self, arg):
+      return self
+    def logical_not(self):
+      return FalseBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+  class Undefined(object):
+    def is_undefined(self):
+      return True
+    def __nonzero__(self):
+      return False
+    def primitive_value(self):
+      return False
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (self if arg.__nonzero__() else augment(False))
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (augment(True) if arg.__nonzero__() else self)
+    def logical_not(self):
+      return self
+    def logical_equals(self, arg):
+      return self
+    def all_true(self):
+      return self
+    def all_false(self):
+      return self
+    def any_true(self):
+      return self
+    def all_false(self):
+      return self
+    def __add__(self, other):
+      return self
+    def __mul__(self, other):
+      return self
+    def __sub__(self, other):
+      return self
+    def __div__(self, other):
+      return self
+    def __eq__(self, other):
+      return self
+    def __lt__(self, other):
+      return self
+    def __le__(self, other):
+      return self
+    def __gt__(self, other):
+      return self
+    def __ge__(self, other):
+      return self
+    def __ne__(self, other):
+      return self
+    def __len__(self):
+      return self
+  class Datetime(datetime.datetime):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return datetime.datetime(self.year, self.month, self.day, self.hour, self.minute, self.second, self.microsecond, self.tzinfo)
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Float(float):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return float(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Integer(int):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return int(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class String(str):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return str(self)
+    def __len__(self):
+      return Integer(self.primitive_value().__len__())
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == (other.primitive_value()))
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < (other.primitive_value()))
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= (other.primitive_value()))
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > (other.primitive_value()))
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= (other.primitive_value()))
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != (other.primitive_value()))
+  class Dictionary(object):
+    def __init__(self, da_dict):
+      self.da_dict = da_dict
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return self.da_dict
+    def all_true(self):
+      return augment(self.da_dict.all_true())
+    def all_false(self):
+      return augment(self.da_dict.all_false())
+    def any_true(self):
+      return augment(self.da_dict.any_true())
+    def any_false(self):
+      return augment(self.da_dict.any_false())
+    def __str__(self):
+      return str(self.da_dict)
+  def augment(something):
+    string_type = type('a')
+    bool_type = type(True)
+    integer_type = type(1)
+    date_type = type(datetime.datetime(2018, 12, 11))
+    float_type = type(1.0)
+    my_type = type(something)
+    alt_type = something.__class__.__name__
+    if(my_type == string_type or alt_type == 'unicode'):
+      return String(something)
+    elif(my_type == bool_type):
+      if(something == True):
+        return TrueBoolean()
+      else:
+        return FalseBoolean()
+    elif(my_type == integer_type or alt_type == 'int'):
+      return Integer(something)
+    elif(my_type == float_type or alt_type == 'float'):
+      return Float(something)
+    elif(my_type == date_type):
+      return Datetime(something.year, something.month, something.day, something.hour, something.minute, something.second, something.microsecond, something.tzinfo)
+    elif(alt_type == 'DADict'):
+      return Dictionary(something)
+    raise Exception("Couldn't augment because type() is " + str(my_type) + " and alt type is " + alt_type + " and argument was " + str(something))
+  def ternary(condition, true_value, false_value):
+    if type(condition) == type(Undefined()):
+      return Undefined()
+    elif condition:
+      return true_value
+    else:
+      return false_value
+
+---
+initial: True
+code: |
+  import re
+  from bs4 import BeautifulSoup
+  from markdown import markdown
+
+  def markdown_to_plaintext(markdown_string):
+    html = markdown(markdown_string)
+    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
+    html = re.sub(r'<code>(.*?)</code >', ' ', html)
+    soup = BeautifulSoup(html, "html.parser")
+    text = ''.join(soup.findAll(text=True))
+    return text
+---
+
+mandatory: True
+code: |
+	def ___define_until_idempotent():
+		original_dict = all_variables()
+		___define_all()
+		if all_variables() != original_dict:
+			re_run_logic()
+	def ___define_all():
+		vars = all_variables()
+
+
+---
+initial: True
+code: |
+	___define_until_idempotent()
+---
+
+features:
+	debug: False
+	inverse navbar: False
+---
+metadata:
+	title: |
+		Third Party Claim of Exemption
+
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	This form will help you assert your third-party claim of exemption. Please tell us about yourself.
+fields:
+	- "Your Full Name": Full_Name
+		datatype: text
+		required: true
+
+	- "Your Address with City State & Zip Code": Full_Address
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Please tell us about the court case in which your property has been levied.
+fields:
+	- "Case Name. Ex: Company v. Person": Case_Name
+		datatype: text
+		required: true
+
+	- "Court Case No.": Case_No
+		datatype: text
+		required: true
+
+	- "Levying Officer's File No.": Levying_File_No
+		datatype: text
+		required: true
+
+	- "": variable_4
+		datatype: 
+		required: true
+
+	- "County the court case was filed in": County
+		datatype: text
+		required: true
+
+	- "Court Street Address": Court_Address
+		datatype: text
+		required: true
+
+	- "Court City, State & Zip": Court_City_State_Zip
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Tell us about the property you are claiming as yours which has been levied.
+fields:
+	- "Is the property land, a house, or other real property?": Real_Prop_YesNo
+		datatype: checkboxes
+		required: true
+		choices:
+			- "Yes": "Yes"
+			- "No": "No"
+		none of the above: False
+
+	- "Is the property personal property, like a car or money in a bank account?": Personal_Prop_YesNo
+		datatype: checkboxes
+		required: true
+		choices:
+			- "Yes": "Yes"
+			- "No": "No"
+		none of the above: False
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	(((augment(Real_Prop_YesNo["Yes"]) if defined("Real_Prop_YesNo") else Undefined()).logical_equals((augment(Real_Prop_YesNo["Yes"]) if defined("Real_Prop_YesNo") else Undefined()))))
+question: ''
+subquestion: |
+	What kind of interest do you have in this real property? If you have an ownership interest in this property, this means your name is on the title. If you have a security interest, this means that you have a deed of trust in your name on this property or a lien recorded against this property
+fields:
+	- "Ownership": Ownership_YesNo
+		datatype: checkboxes
+		required: true
+		choices:
+			- "Yes": "Yes"
+			- "No": "No"
+		none of the above: False
+
+	- "Security Interest / Deed of Trust": Security_YesNo
+		datatype: checkboxes
+		required: true
+		choices:
+			- "Yes": "Yes"
+			- "No": "No"
+		none of the above: False
+
+	- "Lien": Lien_YesNo
+		datatype: checkboxes
+		required: true
+		choices:
+			- "Yes": "Yes"
+			- "No": "No"
+		none of the above: False
+
+	- "Other Interest in Real Property (land or buildings)": Other_Interest_YesNo
+		datatype: checkboxes
+		required: true
+		choices:
+			- "Yes": "Yes"
+			- "No": "No"
+		none of the above: False
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Tell us about your interest in this property.
+fields:
+	- "Who else has in interest in the  property?": Interest_1
+		input type: dropdown
+		required: true
+		datatype: text
+		choices:
+			- "Just me - I am the sole owner.": "Sole owner"
+			- "Join owner - someone else and I own the property together": "Joint owner "
+
+	- "If you have more to tell us more about other people's interest in the property, type that information here.": Interest_2
+		datatype: text
+		required: false
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Tell us about your interest in this property.
+fields:
+	- "I am the owner of this property because....": Property_Interest_Facts_1
+		datatype: text
+		required: true
+
+	- "The person named in the court case does not own the property because...": Property_Interest_Facts_2
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Tell us what you think the property is worth if you were to sell it, or the balance in the bank account if this is a bank levy.
+fields:
+	- "Estimated Fair Market Value": Prop_Value
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	You indicated that you have a security interest or lien on this real property. What is the interest rate on your lien or security interest?
+fields:
+	- "Interest rate": Int_Rate
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Tell us about when and where you are signing this document.
+fields:
+	- "Today's Date": Date
+		datatype: date
+		required: true
+
+	- "City in which you are signing": City_Affidavit
+		datatype: text
+		required: true
+
+	- "State in which you are signing": State_Affidavit
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+
+signature: Third_Party_Sig
+under: |
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Click here to assemble your third party claim of exemption!
+
+attachment code: |
+	filter(bool, [__Form_011_Third_Party_Claim_Form_ec0c99ff3adb])
+allow emailing: False
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---
+code: |
+	import requests
+	import json
+	import time
+	template_id = 431
+	access_key = 'bM0IKRrwrl'
+	drawn_variables = {'1338': markdown_to_plaintext(str(Full_Name)), '1342': markdown_to_plaintext(str(Court_Address)), '1339': markdown_to_plaintext(str(Full_Address)), '1345': markdown_to_plaintext(str(Case_No)), '1348': markdown_to_plaintext(str(Real_Prop_YesNo)), '1343': markdown_to_plaintext(str(Court_City_State_Zip)), '1344': markdown_to_plaintext(str(Case_Name)), '1340': markdown_to_plaintext(str(County)), '1341': markdown_to_plaintext(str(In_Pro_Per if defined("In_Pro_Per") else "")), '1346': markdown_to_plaintext(str(Levying_File_No)), '1347': markdown_to_plaintext(str(Full_Name)), '1349': markdown_to_plaintext(str(Personal_Prop_YesNo)), '1350': markdown_to_plaintext(str(Full_Address)), '1351': markdown_to_plaintext(str(Interest_1)), '1353': markdown_to_plaintext(str(Ownership_YesNo)), '1354': markdown_to_plaintext(str(Security_YesNo)), '1357': markdown_to_plaintext(str(Property_Interest_Facts_1)), '1358': markdown_to_plaintext(str(Property_Interest_Facts_2 if defined("Property_Interest_Facts_2") else "")), '1361': markdown_to_plaintext(str(Int_Rate if defined("Int_Rate") else "")), '1362': markdown_to_plaintext(str((Date.strftime('%m-%d-%Y') if Date != "" else ""))), '1364': markdown_to_plaintext(str(State_Affidavit)), '1352': markdown_to_plaintext(str(Interest_2 if defined("Interest_2") else "")), '1355': markdown_to_plaintext(str(Lien_YesNo if defined("Lien_YesNo") else "")), '1356': markdown_to_plaintext(str(Other_Interest_YesNo if defined("Other_Interest_YesNo") else "")), '1359': markdown_to_plaintext(str(Prop_Value)), '1360': markdown_to_plaintext(str(Int_Rate_YesNo if defined("Int_Rate_YesNo") else "")), '1363': markdown_to_plaintext(str(City_Affidavit)), '1365': markdown_to_plaintext(str(Full_Name)), '1366': markdown_to_plaintext(str((Third_Party_Sig.url_for() if Third_Party_Sig != "" else "")))}
+	fillable_variables = {}
+	post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables, 'fillable_target_variables': fillable_variables }
+	fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+	task_id = fill_response.get('task_id')
+	filled_attachment_url = ""
+	done = False
+	pdf_attempts = 0
+	while not done and pdf_attempts < 250:
+		task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+		done = task_response.get('status') == 'done'
+		filled_attachment_url = task_response.get('document')
+		pdf_attempts += 1
+		time.sleep(.2)
+	__Form_011_Third_Party_Claim_Form_ec0c99ff3adb = DAFileCollection()
+	__Form_011_Third_Party_Claim_Form_ec0c99ff3adb.pdf = DAFile()
+	__Form_011_Third_Party_Claim_Form_ec0c99ff3adb.pdf.initialize(extension="pdf")
+	if done:
+		__Form_011_Third_Party_Claim_Form_ec0c99ff3adb.pdf.from_url(filled_attachment_url)
+		__Form_011_Third_Party_Claim_Form_ec0c99ff3adb.info = {'name': '7483 Form 011-Third Party Claim Form', 'filename': '__Form_011_Third_Party_Claim_Form', 'description': ''}
+	else:
+		__Form_011_Third_Party_Claim_Form_ec0c99ff3adb.pdf.from_url('https://community.lawyer/static/blank.pdf')
+		__Form_011_Third_Party_Claim_Form_ec0c99ff3adb.info = {'name': 'We encountered a problem', 'filename': '__Form_011_Third_Party_Claim_Form', 'description': 'There was a problem filling your Pdf - please try again'}
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Thank you for using this app. Your session is complete.
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---

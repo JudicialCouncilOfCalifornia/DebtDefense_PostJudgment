@@ -1,0 +1,889 @@
+---
+modules:
+	- docassemble.base.util
+---
+initial: True
+code: |
+  import datetime
+  import types
+  class FalseBoolean(object):
+    def primitive_value(self):
+      return False
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return False
+    def logical_and(self, arg):
+      return self
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (TrueBoolean() if arg.__nonzero__() else self)
+    def logical_not(self):
+      return TrueBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else TrueBoolean())
+  class TrueBoolean(object):
+    def primitive_value(self):
+      return True
+    def is_undefined(self):
+      return False
+    def __nonzero__(self):
+      return True
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+    def logical_or(self, arg):
+      return self
+    def logical_not(self):
+      return FalseBoolean()
+    def logical_equals(self, arg):
+      if arg.is_undefined():
+        return Undefined()
+      else:
+        return (self if arg.__nonzero__() else FalseBoolean())
+  class Undefined(object):
+    def is_undefined(self):
+      return True
+    def __nonzero__(self):
+      return False
+    def primitive_value(self):
+      return False
+    def logical_and(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (self if arg.__nonzero__() else augment(False))
+    def logical_or(self, arg):
+      if arg.is_undefined():
+        return self
+      else:
+        return (augment(True) if arg.__nonzero__() else self)
+    def logical_not(self):
+      return self
+    def logical_equals(self, arg):
+      return self
+    def all_true(self):
+      return self
+    def all_false(self):
+      return self
+    def any_true(self):
+      return self
+    def all_false(self):
+      return self
+    def __add__(self, other):
+      return self
+    def __mul__(self, other):
+      return self
+    def __sub__(self, other):
+      return self
+    def __div__(self, other):
+      return self
+    def __eq__(self, other):
+      return self
+    def __lt__(self, other):
+      return self
+    def __le__(self, other):
+      return self
+    def __gt__(self, other):
+      return self
+    def __ge__(self, other):
+      return self
+    def __ne__(self, other):
+      return self
+    def __len__(self):
+      return self
+  class Datetime(datetime.datetime):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return datetime.datetime(self.year, self.month, self.day, self.hour, self.minute, self.second, self.microsecond, self.tzinfo)
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Float(float):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return float(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class Integer(int):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return int(self)
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __mul__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() * (other.primitive_value()))
+    def __sub__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() - (other.primitive_value()))
+    def __div__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() / (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == other.primitive_value())
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < other.primitive_value())
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= other.primitive_value())
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > other.primitive_value())
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= other.primitive_value())
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != other.primitive_value())
+  class String(str):
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return str(self)
+    def __len__(self):
+      return Integer(self.primitive_value().__len__())
+    def __add__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() + (other.primitive_value()))
+    def __eq__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() == (other.primitive_value()))
+    def __lt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() < (other.primitive_value()))
+    def __le__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() <= (other.primitive_value()))
+    def __gt__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() > (other.primitive_value()))
+    def __ge__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() >= (other.primitive_value()))
+    def __ne__(self, other):
+      if other.is_undefined():
+        return other
+      else:
+        return augment(self.primitive_value() != (other.primitive_value()))
+  class Dictionary(object):
+    def __init__(self, da_dict):
+      self.da_dict = da_dict
+    def is_undefined(self):
+      return False
+    def primitive_value(self):
+      return self.da_dict
+    def all_true(self):
+      return augment(self.da_dict.all_true())
+    def all_false(self):
+      return augment(self.da_dict.all_false())
+    def any_true(self):
+      return augment(self.da_dict.any_true())
+    def any_false(self):
+      return augment(self.da_dict.any_false())
+    def __str__(self):
+      return str(self.da_dict)
+  def augment(something):
+    string_type = type('a')
+    bool_type = type(True)
+    integer_type = type(1)
+    date_type = type(datetime.datetime(2018, 12, 11))
+    float_type = type(1.0)
+    my_type = type(something)
+    alt_type = something.__class__.__name__
+    if(my_type == string_type or alt_type == 'unicode'):
+      return String(something)
+    elif(my_type == bool_type):
+      if(something == True):
+        return TrueBoolean()
+      else:
+        return FalseBoolean()
+    elif(my_type == integer_type or alt_type == 'int'):
+      return Integer(something)
+    elif(my_type == float_type or alt_type == 'float'):
+      return Float(something)
+    elif(my_type == date_type):
+      return Datetime(something.year, something.month, something.day, something.hour, something.minute, something.second, something.microsecond, something.tzinfo)
+    elif(alt_type == 'DADict'):
+      return Dictionary(something)
+    raise Exception("Couldn't augment because type() is " + str(my_type) + " and alt type is " + alt_type + " and argument was " + str(something))
+  def ternary(condition, true_value, false_value):
+    if type(condition) == type(Undefined()):
+      return Undefined()
+    elif condition:
+      return true_value
+    else:
+      return false_value
+
+---
+initial: True
+code: |
+  import re
+  from bs4 import BeautifulSoup
+  from markdown import markdown
+
+  def markdown_to_plaintext(markdown_string):
+    html = markdown(markdown_string)
+    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
+    html = re.sub(r'<code>(.*?)</code >', ' ', html)
+    soup = BeautifulSoup(html, "html.parser")
+    text = ''.join(soup.findAll(text=True))
+    return text
+---
+
+mandatory: True
+code: |
+	def ___define_until_idempotent():
+		original_dict = all_variables()
+		___define_all()
+		if all_variables() != original_dict:
+			re_run_logic()
+	def ___define_all():
+		vars = all_variables()
+
+
+---
+initial: True
+code: |
+	___define_until_idempotent()
+---
+
+features:
+	debug: True
+	inverse navbar: False
+---
+metadata:
+	title: |
+		WG-007
+
+---
+mandatory: |
+	False
+question: ''
+subquestion: |
+	Welcome! You are working on a claim of exemption because you are a working person and you need your income to help support yourself and your family. This next set of questions is going to tell the judge how much money your earn and what your monthly expenses are. This will finish with a form you can print out and attach to either your Bank Levy Claim of Exemption or your Wage Garnishment Claim of Exemption. Let's get started!
+field: unique_id
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+
+
+
+	**Welcome!** You are working on a claim of exemption because you are a working person and you need your income to help support yourself and your family.
+
+
+	This next set of questions is going to tell the judge how much money your earn and what your monthly expenses are. This will finish with a form you can print out and attach to either your Bank Levy Claim of Exemption or your Wage Garnishment Claim of Exemption. Let's get started!
+
+
+	Please answer the next set of questions about your household's income and expenses to complete your claim of exemption.
+fields:
+	- "Court Case Name (ex: Creditor v. You)": case_name
+		datatype: text
+		required: true
+
+	- "Levy File No.": levy_no
+		datatype: text
+		required: true
+
+	- "Court Case No.": case_no
+		datatype: text
+		required: true
+
+	- "Are you married?": married
+		input type: radio
+		required: true
+		datatype: text
+		choices:
+			- "": "Yes"
+			- "": "No"
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(married) if defined("married") else Undefined()) == (augment("Yes"))))
+question: ''
+subquestion: |
+	Please tell us about your spouse's monthly takehome income (after taxes) and the source of income (ex: "employment" or "disability" or "Social Security').
+fields:
+	- "Spouse's Name": spouse_name
+		datatype: text
+		required: true
+
+	- "Spouse Age": spouse_age
+		datatype: number
+		required: true
+
+	- "Spouse's monthly takehome income and source of income": spouse_income
+		datatype: text
+		required: true
+
+	- "Do other people in your household rely on you or your spouse for support?": dependents_yesno
+		input type: radio
+		required: true
+		datatype: text
+		choices:
+			- "": "yes"
+			- "": "no"
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
+question: ''
+subquestion: |
+	Please add information about other people in your household who rely on you for support, such as children (including adult children), or seniors.
+fields:
+	- "Dependent name": dependent_name1
+		datatype: text
+		required: true
+
+	- "Dependent name": dependent_name2
+		datatype: text
+		required: true
+
+	- "Dependent name": dependent_name3
+		datatype: text
+		required: true
+
+	- "Dependent name": dependent_name4
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
+question: ''
+subquestion: |
+	What are the ages of your dependents?
+fields:
+	- "${dependent_name1} age": d_age1
+		datatype: number
+		required: true
+
+	- "${dependent_name2} age": d_age2
+		datatype: number
+		required: true
+
+	- "${dependent_name3} age": d_age3
+		datatype: number
+		required: true
+
+	- "${dependent_name4} age": d_age4
+		datatype: number
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
+question: ''
+subquestion: |
+	What is the relationship to each of your dependents to you? (ex: son, granddaughter, mother, etc.)
+fields:
+	- "${dependent_name1} relationship to you": d_ship1
+		datatype: text
+		required: true
+
+	- "${dependent_name2}": d_ship2
+		datatype: text
+		required: true
+
+	- "${dependent_name3}": d_ship3
+		datatype: text
+		required: true
+
+	- "${dependent_name4}": d_ship4
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
+question: ''
+subquestion: |
+	What is the income of each of your dependent and from what source? (ex: employment, SSI, Social Security, none)
+fields:
+	- "${dependent_name1} income": d_income1
+		datatype: text
+		required: true
+
+	- "${dependent_name2} income": d_income2
+		datatype: text
+		required: true
+
+	- "${dependent_name3} income": d_income3
+		datatype: text
+		required: true
+
+	- "${dependent_name4} income": d_income4
+		datatype: text
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Now we are going to ask some questions about your monthly income. It will be helpful if you have a paystub available to answer the next set of questions. Click continue once you have located your paystub.
+field: paystub
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Please include money from your paycheck and then add any other money that you regularly get every month, like from spousal support, a pension, or Social Security. You do not need to include non-cash benefits like food stamps.
+fields:
+	- "My pay every month before taxes is:": gross_income
+		datatype: number
+		required: true
+
+	- "The taxes (federal, state, FICA & SDI) are:": taxes
+		datatype: number
+		required: true
+
+	- "Health insurance withholding:": with_amt1
+		datatype: number
+		required: true
+
+	- "Union dues or other withholding:": with_amt2
+		datatype: number
+		required: true
+
+	- "Other withholding": with_amt3
+		datatype: number
+		required: true
+
+	- "Total withholding": with_total
+		datatype: number
+		required: true
+
+	- "My monthly take-home pay is:": net_income
+		datatype: number
+		required: true
+
+	- "If you get money from another source each month, list that amount here:": other_inc_amt
+		datatype: text
+		required: true
+
+	- "Your total monthly takehome income is:": total_takehome
+		datatype: number
+		required: true
+
+	- "Does this look right?": takehome_correct
+		datatype: yesnoradio
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Now we are going to ask some questions about your property. If you have the following kinds of property, you will be prompted to give some more information about the value of the things you own. Remember that if you have a loan on a car or a mortgage on your house, the value is the equity - the amount of value minus the loan balance.
+fields:
+	- "Do you have any bank accounts?": bank_yesno
+		datatype: yesnoradio
+		required: true
+
+	- "Do you own any cars?": cars_yesno
+		datatype: yesnoradio
+		required: true
+
+	- "Do you own real property (a house, condo, or land?)": realprop_yesno
+		datatype: yesnoradio
+		required: true
+
+	- "Do you own other valuable property like stocks, bonds, furs, or expensive jewelry?": fancy_stuff_yesno
+		datatype: yesnoradio
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(bank_yesno) if defined("bank_yesno") else Undefined())))
+question: ''
+subquestion: |
+
+fields:
+	- "Checking zccount bank name:": checking
+		datatype: text
+		required: true
+
+	- "Checking account balance": chk_amt
+		datatype: number
+		required: true
+
+	- "Savings account bank name:": savings
+		datatype: number
+		required: true
+
+	- "Savings account balance": svg_amt
+		datatype: number
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(cars_yesno) if defined("cars_yesno") else Undefined())))
+question: ''
+subquestion: |
+	Please list the make and year of each car and the value (minus any loan balance). If the loan value is more than the car is worth, you can write 0.
+fields:
+	- "Car 1 make and year": car1
+		datatype: text
+		required: true
+
+	- "Car 1 value": car1_val
+		datatype: number
+		required: true
+
+	- "Car 2 make and year": car2
+		datatype: text
+		required: true
+
+	- "Car 2 value": car2_val
+		datatype: number
+		required: true
+
+	- "Car 3 make and year": car3
+		datatype: text
+		required: true
+
+	- "Car 3 value": car3_val
+		datatype: number
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(realprop_yesno) if defined("realprop_yesno") else Undefined())))
+question: ''
+subquestion: |
+	What is the equity in the property (or properties) that you own? Equity is the value minus the loan balances. If you owe more than your property is worth, you should enter 0 for the equity.
+fields:
+	- "Real estate equity total": real_equity
+		datatype: number
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	(((augment(fancy_stuff_yesno) if defined("fancy_stuff_yesno") else Undefined())))
+question: ''
+subquestion: |
+	Tell us about the value of any stocks, bonds, or expensive jewelry or other items with a high value.
+fields:
+	- "Please describe the property": fancy_stuff
+		datatype: text
+		required: true
+
+	- "Property value (estimated total)": fancy_value
+		datatype: number
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Please tell us about your monthly expenses. Use your best estimate of the average of what you pay for each of these things each month. This list is for bills that come due each month for living expenses. We will ask you later about your credit card, car loan, student loan, payday loan, or other loan payments
+fields:
+	- "Rent or mortgage (including any HOA dues)": rent
+		datatype: number
+		required: true
+
+	- "Food and household supplies": food
+		datatype: number
+		required: true
+
+	- "Utilities (including cable, cell phone, power, water, & garbage)": utilities
+		datatype: number
+		required: true
+
+	- "Clothing (one month average of yearly costs)": clothing
+		datatype: number
+		required: true
+
+	- "Medical and dental out-of-pocket payments": medical
+		datatype: number
+		required: true
+
+	- "Insurance (life, health, homeowners or renters)": insurance
+		datatype: number
+		required: true
+
+	- "School tuition or childcare costs": childcare
+		datatype: number
+		required: true
+
+	- "Child or spousal support from a prior relationship": family_supp
+		datatype: number
+		required: true
+
+	- "Transportation and auto expenses (insurance, gas, repairs, public transit)": trans
+		datatype: number
+		required: true
+
+	- "Laundry and cleaning": laundry
+		datatype: number
+		required: true
+
+	- "Entertainment": entertainment
+		datatype: number
+		required: true
+
+	- "Other monthly expense (describe here)": other_expense
+		datatype: text
+		required: true
+
+	- "Cost per month of other monthly expenses": other_val
+		datatype: number
+		required: true
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Thank you! Click here to download your income and expense Financial Statement. Attach this form to your Wage Garnishment Claim of Exemption or your Bank Levy Claim of Exemption and send or hand deliver it to the sheriff's office on the notice you got from the court, the bank, or your employer.
+
+attachment code: |
+	filter(bool, [wg007_decrypted_be19f36d04c9])
+allow emailing: False
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+right: |
+	TEST MODE: This app is in test mode. To remove this message, you must activate the app.
+---
+code: |
+	import requests
+	import json
+	import time
+	template_id = 269
+	access_key = 'ojMO69sX0U'
+	drawn_variables = {'775': markdown_to_plaintext(str(case_name)), '773': markdown_to_plaintext(str(levy_no)), '774': markdown_to_plaintext(str(case_no))}
+	fillable_variables = {'FillText60': markdown_to_plaintext(str(fancy_stuff_yesno if defined("fancy_stuff_yesno") else "")), 'FillText3': markdown_to_plaintext(str(car_total if defined("car_total") else "")), 'FillText2': markdown_to_plaintext(str(real_equity if defined("real_equity") else "")), 'FillText44': markdown_to_plaintext(str(dependent_name1 if defined("dependent_name1") else "")), 'FillText48': markdown_to_plaintext(str(dependent_name2 if defined("dependent_name2") else "")), 'FillText47': markdown_to_plaintext(str(d_ship1 if defined("d_ship1") else "")), 'FillText22': markdown_to_plaintext(str(cash if defined("cash") else "")), 'FillText70': markdown_to_plaintext(str(total_expenses if defined("total_expenses") else "")), 'FillText69': markdown_to_plaintext(str(defendant_full_name if defined("defendant_full_name") else "")), 'FillText28': markdown_to_plaintext(str(with_amt3 if defined("with_amt3") else "")), 'FillText8': markdown_to_plaintext(str(car1_val if defined("car1_val") else "")), 'FillText83': markdown_to_plaintext(str(rent if defined("rent") else "")), 'FillText76': markdown_to_plaintext(str(family_support if defined("family_support") else "")), 'FillText95': markdown_to_plaintext(str(balance2 if defined("balance2") else "")), 'FillText114': markdown_to_plaintext(str(paymt6 if defined("paymt6") else "")), 'FillText116': markdown_to_plaintext(str(owed_by6 if defined("owed_by6") else "")), 'FillText41': markdown_to_plaintext(str(spouse_age if defined("spouse_age") else "")), 'FillText52': markdown_to_plaintext(str(dependent_name3 if defined("dependent_name3") else "")), 'FillText56': markdown_to_plaintext(str(dependent_name4 if defined("dependent_name4") else "")), 'FillText45': markdown_to_plaintext(str(d_age1 if defined("d_age1") else "")), 'FillText49': markdown_to_plaintext(str(d_age2 if defined("d_age2") else "")), 'FillText53': markdown_to_plaintext(str(d_age3 if defined("d_age3") else "")), 'FillText57': markdown_to_plaintext(str(d_age4 if defined("d_age4") else "")), 'FillText51': markdown_to_plaintext(str(d_ship2 if defined("d_ship2") else "")), 'FillText55': markdown_to_plaintext(str(d_ship3 if defined("d_ship3") else "")), 'FillText59': markdown_to_plaintext(str(d_ship4 if defined("d_ship4") else "")), 'FillText46': markdown_to_plaintext(str(d_income1 if defined("d_income1") else "")), 'FillText50': markdown_to_plaintext(str(d_income2 if defined("d_income2") else "")), 'FillText54': markdown_to_plaintext(str(d_income3 if defined("d_income3") else "")), 'FillText58': markdown_to_plaintext(str(d_income4 if defined("d_income4") else "")), 'FillText34': markdown_to_plaintext(str(taxes if defined("taxes") else "")), 'FillText33': markdown_to_plaintext(str(with_1 if defined("with_1") else "")), 'FillText31': markdown_to_plaintext(str(with_2 if defined("with_2") else "")), 'FillText29': markdown_to_plaintext(str(with_3 if defined("with_3") else "")), 'FillText32': markdown_to_plaintext(str(with_amt1 if defined("with_amt1") else "")), 'FillText30': markdown_to_plaintext(str(with_amt2 if defined("with_amt2") else "")), 'FillText27': markdown_to_plaintext(str(with_total if defined("with_total") else "")), 'FillText26': markdown_to_plaintext(str(net_income if defined("net_income") else "")), 'FillText24': markdown_to_plaintext(str(other_income if defined("other_income") else "")), 'FillText25': markdown_to_plaintext(str(other_inc_amt if defined("other_inc_amt") else "")), 'FillText23': markdown_to_plaintext(str(total_takehome if defined("total_takehome") else "")), 'FillText21': markdown_to_plaintext(str(checking if defined("checking") else "")), 'FillText20': markdown_to_plaintext(str(chk_amt if defined("chk_amt") else "")), 'FillText19': markdown_to_plaintext(str(savings if defined("savings") else "")), 'FillText18': markdown_to_plaintext(str(svg_amt if defined("svg_amt") else "")), 'FillText17': markdown_to_plaintext(str(total_accts if defined("total_accts") else "")), 'FillText9': markdown_to_plaintext(str(car1 if defined("car1") else "")), 'FillText7': markdown_to_plaintext(str(car2 if defined("car2") else "")), 'FillText6': markdown_to_plaintext(str(car2_val if defined("car2_val") else "")), 'FillText5': markdown_to_plaintext(str(car3 if defined("car3") else "")), 'FillText4': markdown_to_plaintext(str(car3_val if defined("car3_val") else "")), 'FillText1': markdown_to_plaintext(str(fancy_value if defined("fancy_value") else "")), 'FillText82': markdown_to_plaintext(str(food if defined("food") else "")), 'FillText81': markdown_to_plaintext(str(utilities if defined("utilities") else "")), 'FillText80': markdown_to_plaintext(str(clothing if defined("clothing") else "")), 'FillText79': markdown_to_plaintext(str(medical if defined("medical") else "")), 'FillText78': markdown_to_plaintext(str(insurance if defined("insurance") else "")), 'FillText77': markdown_to_plaintext(str(childcare if defined("childcare") else "")), 'FillText75': markdown_to_plaintext(str(trans if defined("trans") else "")), 'FillText74': markdown_to_plaintext(str(total_install if defined("total_install") else "")), 'FillText73': markdown_to_plaintext(str(laundry if defined("laundry") else "")), 'FillText72': markdown_to_plaintext(str(entertainment if defined("entertainment") else "")), 'FillText71': markdown_to_plaintext(str(other_val if defined("other_val") else "")), 'FillTxt39': markdown_to_plaintext(str(other_expense if defined("other_expense") else "")), 'FillText87': markdown_to_plaintext(str(creditor1 if defined("creditor1") else "")), 'FillText89': markdown_to_plaintext(str(paymt1 if defined("paymt1") else "")), 'FillText91': markdown_to_plaintext(str(owed_by1 if defined("owed_by1") else "")), 'FillText90': markdown_to_plaintext(str(balance1 if defined("balance1") else "")), 'FillText92': markdown_to_plaintext(str(creditor2 if defined("creditor2") else "")), 'FillText94': markdown_to_plaintext(str(paymt2 if defined("paymt2") else "")), 'FillText96': markdown_to_plaintext(str(owed__by2 if defined("owed__by2") else "")), 'FillText97': markdown_to_plaintext(str(creditor3 if defined("creditor3") else "")), 'FillText99': markdown_to_plaintext(str(paymt3 if defined("paymt3") else "")), 'FillText100': markdown_to_plaintext(str(balance3 if defined("balance3") else "")), 'FillText40': markdown_to_plaintext(str(spouse_name if defined("spouse_name") else "")), 'FillText42': markdown_to_plaintext(str(spouse_income if defined("spouse_income") else "")), 'FillText102': markdown_to_plaintext(str(creditor4 if defined("creditor4") else "")), 'FillText107': markdown_to_plaintext(str(creditor5 if defined("creditor5") else "")), 'FillText112': markdown_to_plaintext(str(creditor6 if defined("creditor6") else "")), 'FillText104': markdown_to_plaintext(str(paymt4 if defined("paymt4") else "")), 'FillText109': markdown_to_plaintext(str(paymt5 if defined("paymt5") else "")), 'FillText105': markdown_to_plaintext(str(balance4 if defined("balance4") else "")), 'FillText110': markdown_to_plaintext(str(balance5 if defined("balance5") else "")), 'FillText115': markdown_to_plaintext(str(balance6 if defined("balance6") else "")), 'FillText101': markdown_to_plaintext(str(owed_by3 if defined("owed_by3") else "")), 'FillText106': markdown_to_plaintext(str(owed_by4 if defined("owed_by4") else "")), 'FillText111': markdown_to_plaintext(str(owed_by5 if defined("owed_by5") else "")), 'FillText121': markdown_to_plaintext(str(other_facts if defined("other_facts") else "")), 'FillText117': markdown_to_plaintext(str(existing_ewo if defined("existing_ewo") else "")), 'FillText120': markdown_to_plaintext(str(existing_wage_assignment if defined("existing_wage_assignment") else "")), 'FillText12': markdown_to_plaintext(str(date if defined("date") else "")), 'FillText68': markdown_to_plaintext(str(spouse_name if defined("spouse_name") else ""))}
+	post_data = { 'template_id': template_id, 'access_key': access_key, 'drawn_target_variables': drawn_variables, 'fillable_target_variables': fillable_variables }
+	fill_response = requests.post('https://community.lawyer/fill', json=post_data).json()
+	task_id = fill_response.get('task_id')
+	filled_attachment_url = ""
+	done = False
+	pdf_attempts = 0
+	while not done and pdf_attempts < 250:
+		task_response = requests.get('https://community.lawyer/tasks?task_id={0}&access_key={1}'.format(task_id, access_key)).json()
+		done = task_response.get('status') == 'done'
+		filled_attachment_url = task_response.get('document')
+		pdf_attempts += 1
+		time.sleep(.2)
+	wg007_decrypted_be19f36d04c9 = DAFileCollection()
+	wg007_decrypted_be19f36d04c9.pdf = DAFile()
+	wg007_decrypted_be19f36d04c9.pdf.initialize(extension="pdf")
+	if done:
+		wg007_decrypted_be19f36d04c9.pdf.from_url(filled_attachment_url)
+		wg007_decrypted_be19f36d04c9.info = {'name': 'wg007_decrypted', 'filename': 'wg007_decrypted', 'description': ''}
+	else:
+		wg007_decrypted_be19f36d04c9.pdf.from_url('https://community.lawyer/static/blank.pdf')
+		wg007_decrypted_be19f36d04c9.info = {'name': 'We encountered a problem', 'filename': 'wg007_decrypted', 'description': 'There was a problem filling your Pdf - please try again'}
+---
+mandatory: |
+	True
+question: ''
+subquestion: |
+	Thank you for using this app. Your session is complete.
+
+under: |
+	<hr/>
+	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
+---

@@ -1,0 +1,88 @@
+modules:
+  - docassemble.base.util
+---
+metadata:
+  title: Post-judgment claims of exemption
+  
+---
+mandatory: True
+code: |
+  need (get_started, notice_received, defendant_full_name, county_name, all_done) 
+---  
+images: 
+  superhero: noun_Superhero.png
+  superhero2: noun_Superhero_2.png
+  
+---
+Mandatory: True
+field: get_started
+decoration: superhero
+question: |
+ We understand that you have a debt collection judgment against you 
+ that someone is trying to collect. 
+ You are on the right track to figuring out what to do next!  
+ This set of questions will help you to understand where you are in this process
+ and will help you assert your rights! :superhero2:
+continue button label: Get Started
+---
+Mandatory: true 
+question: | 
+  Have you received a notice from your bank or your employer about this judgment?
+subquestion: | 
+fields:  
+  - "I received a notice": notice_received
+    datatype: dropdown
+    choices: 
+    - Bank notice  
+    - Employer notice 
+    - I did not receive a notice, but I got some documents from the court
+  - "It looks like you don't yet need to file a claim of exemption. Please tell us the document name that you received from the court": exit_link
+    show if:
+      variable: notice_received 
+      is: I did not receive a notice, but I got some documents from the court
+
+continue button label: Continue 
+# need to figure out conditional on click out to content if in the wrong place 
+---
+Mandatory: True
+question: |
+  Now we are going to collect some information about you to put 
+  on your claim of exemption. Please enter your current contact information
+  where the court can send you information about your request. 
+subquestion: |
+  Please enter your full name, address, and phone number (and email address if you would like to provide it)
+fields:
+- Defendant Full Name: defendant_full_name
+- Defendant Address: defendant_address
+- Defendant Phone: defendant_phone
+- Defendant Email: defendant_email 
+  datatype: email 
+  required: false 
+continue button label: Continue
+---
+question: | 
+  Case Information
+subquestion: |
+  Please enter the information about your case from the wage garnishment order.
+fields:
+- County Name: county_name
+# we should be able to autofill the court info - can we make those global variables or autofill when you select the county?
+- Court street address: court_address
+- Court city, state & zip code: court_address2
+- Court branch, if applicable: court_branch
+  required: False 
+- Plaintiff name: plaintiff_name
+- Levying Officer File No.: levy_number
+- Case No.: case_number
+
+continue button label: continue
+---
+question: |
+  You have reached the end of the initial 
+  interview. You will now be directed to answer just a few more questions to have your documents ready to print!
+subquestion: |
+   We have determined that you need to file a .placeholder filename here. 
+sets: all_done
+
+
+
