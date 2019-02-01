@@ -7,7 +7,6 @@ features:
   bootstrap theme: style.css
   progress bar: True
   javascript: a2p.js
- 
 ---
 initial: True
 code: |
@@ -423,7 +422,7 @@ code: |
 			define("total_expenses", ((((((((((augment(rent) if ("rent" in vars) else Undefined()) + ((augment(food) if ("food" in vars) else Undefined())))) + (((augment(utilities) if ("utilities" in vars) else Undefined()) + ((augment(clothing) if ("clothing" in vars) else Undefined()))))) + (((augment(medical) if ("medical" in vars) else Undefined()) + ((augment(insurance) if ("insurance" in vars) else Undefined()))))) + (((augment(childcare) if ("childcare" in vars) else Undefined()) + ((augment(family_supp) if ("family_supp" in vars) else Undefined()))))) + (((augment(trans) if ("trans" in vars) else Undefined()) + ((augment(laundry) if ("laundry" in vars) else Undefined()))))) + (((augment(entertainment) if ("entertainment" in vars) else Undefined()) + ((augment(other_val) if ("other_val" in vars) else Undefined()))))) + (((augment(total_install) if ("total_install" in vars) else Undefined())))).primitive_value()))
 		if ((not ("total_install" in vars)) and (type((((((augment(paymt1_def) if ("paymt1_def" in vars) else Undefined()) + ((augment(paymt2_def) if ("paymt2_def" in vars) else Undefined())))) + (((augment(paymt3_def) if ("paymt3_def" in vars) else Undefined()) + ((augment(paymt4_def) if ("paymt4_def" in vars) else Undefined()))))) + (((augment(paymt5_def) if ("paymt5_def" in vars) else Undefined()) + ((augment(paymt6_def) if ("paymt6_def" in vars) else Undefined())))))) != type(Undefined()))):
 			define("total_install", ((((((augment(paymt1_def) if ("paymt1_def" in vars) else Undefined()) + ((augment(paymt2_def) if ("paymt2_def" in vars) else Undefined())))) + (((augment(paymt3_def) if ("paymt3_def" in vars) else Undefined()) + ((augment(paymt4_def) if ("paymt4_def" in vars) else Undefined()))))) + (((augment(paymt5_def) if ("paymt5_def" in vars) else Undefined()) + ((augment(paymt6_def) if ("paymt6_def" in vars) else Undefined()))))).primitive_value()))
-		if ((not ("exemption_statute" in vars)) and (type((ternary((augment(funds_source_multi["source_wages"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 706.051"), (ternary((augment(funds_source_multi["source_ss"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 704.080"), (ternary((augment(funds_source_multi["source_ssdi"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 704.130"), (ternary((augment(funds_source_multi["source_401k"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Section 704.115"), (ternary((augment(funds_source_multi["source_finaid"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc 704.190"), (ternary((augment(funds_source_multi["source_charity"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.170"), (ternary((augment(funds_source_multi["source_pri_pension"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc 704.115"), (ternary((augment(funds_source_multi["source_ssi"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.080"), (ternary((augment(funds_source_multi["source_pub_pension"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.110"), (ternary((augment(funds_source_multi["source_savings"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 706.051"), augment("")))))))))))))))))))))) != type(Undefined()))):
+		if ((not ("exemption_statute" in vars)) and (type((ternary((augment(funds_source_multi["source_wages"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 706.051"), (ternary((augment(funds_source_multi["source_ss"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 704.080"), (ternary((augment(funds_source_multi["source_ssdi"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 704.130"), (ternary((augment(funds_source_multi["source_401k"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Section 704.115"), (ternary((augment(funds_source_multi["source_finaid"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc 704.190"), (ternary((augment(funds_source_multi["source_charity"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.170"), (ternary((augment(funds_source_multi["source_pri_pension"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc 704.115"), (ternary((augment(funds_source_multi["source_ssi"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.080"), (ternary((augment(funds_source_multi["source_pub_pension"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.110"), (ternary((augment(funds_source_multi["source_savings"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 706.051 and 704.070"), augment("")))))))))))))))))))))) != type(Undefined()))):
 			define("exemption_statute", ((ternary((augment(funds_source_multi["source_wages"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 706.051"), (ternary((augment(funds_source_multi["source_ss"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 704.080"), (ternary((augment(funds_source_multi["source_ssdi"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Civ Code Section 704.130"), (ternary((augment(funds_source_multi["source_401k"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Section 704.115"), (ternary((augment(funds_source_multi["source_finaid"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc 704.190"), (ternary((augment(funds_source_multi["source_charity"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.170"), (ternary((augment(funds_source_multi["source_pri_pension"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc 704.115"), (ternary((augment(funds_source_multi["source_ssi"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.080"), (ternary((augment(funds_source_multi["source_pub_pension"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 704.110"), (ternary((augment(funds_source_multi["source_savings"]) if ("funds_source_multi" in vars) else Undefined()), augment("Cal Code Civ Proc Section 706.051"), augment(""))))))))))))))))))))).primitive_value()))
 		if ((not ("paymt1_def" in vars)) and (type((ternary((augment(installments["student_loans"]) if ("installments" in vars) else Undefined()), (augment(paymt1) if ("paymt1" in vars) else Undefined()), augment(0)))) != type(Undefined()))):
 			define("paymt1_def", ((ternary((augment(installments["student_loans"]) if ("installments" in vars) else Undefined()), (augment(paymt1) if ("paymt1" in vars) else Undefined()), augment(0))).primitive_value()))
@@ -462,9 +461,6 @@ subquestion: |
 	**We understand that you have a debt collection judgment against you that someone is trying to collect. You are on the right track to figuring out what to do next!** **This set of questions will help you to understand where you are in this process and will help you assert your rights!**
 field: unique_id
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	True
@@ -483,9 +479,6 @@ fields:
 			- "I haven't received any notices but I know or think there's a judgment entered against me": "no_notice"
 		none of the above: False
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((((augment(notice_type["ewo_notice"]) if defined("notice_type") else Undefined()).logical_not())).logical_and(((augment(notice_type["bank_notice"]) if defined("notice_type") else Undefined()).logical_not()))).logical_and(((augment(notice_type["levy_other"]) if defined("notice_type") else Undefined()).logical_not())))
@@ -499,9 +492,6 @@ subquestion: |
 
 	**If you haven't received any noticed and would like to look up information about your court case online, you can visit your local county Superior Court website and click on "online case information."**
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(coe_yes) if defined("coe_yes") else Undefined())))
@@ -521,9 +511,6 @@ fields:
 		html: |
 			<span hidden data-variable data-event-type='input' id='jd_name_address'/>
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 script: |
   <script>
     // Those fields which should be conditionally shown
@@ -632,9 +619,6 @@ question: ''
 subquestion: |
 	Thanks for telling us that you are not the person named in the lawsuit! You should file a third-party claim of exemption. [Click here ](https://community.lawyer/cl/annaclairejohnson/new-app-2)for a new interview that will help you with that form. Thank you!!
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(notice_type["bank_notice"]) if defined("notice_type") else Undefined())))
@@ -646,9 +630,6 @@ fields:
 		datatype: yesnoradio
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(notice_type["levy_other"]) if defined("notice_type") else Undefined())))
@@ -660,9 +641,6 @@ fields:
 		datatype: yesnoradio
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	((((augment(notice_date) if defined("notice_date") else Undefined()).logical_not())).logical_or(((augment(notice_date2) if defined("notice_date2") else Undefined()).logical_not())))
@@ -673,9 +651,6 @@ subquestion: |
 
 	If you learned about the judgment within the last six months, you may be able to file a Motion to Set Aside. **Go [here](https://jcc.prelive.opencities.com/Alpha-Services/Consumer-Debt) to learn more about setting aside a judgment.**
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(notice_date) if defined("notice_date") else Undefined())))
@@ -710,9 +685,6 @@ fields:
 		html: |
 			<span hidden data-variable data-event-type='input' id='source_other_details'/>
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 script: |
   <script>
     // Those fields which should be conditionally shown
@@ -857,9 +829,6 @@ fields:
 			- "I can pay some money from my paycheck but I can't afford the 25% that is being garnished right now. I want to ask for a partial Claim of Exemption.": "partial_exempt"
 			- "I have enough money left over each month in my paycheck to let the wage garnishment continue until the judgment is paid in full.": "no_ewo"
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(ewo_options) if defined("ewo_options") else Undefined()) == (augment("partial_exempt"))))
@@ -878,9 +847,6 @@ fields:
 		datatype: currency
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(ewo_options) if defined("ewo_options") else Undefined()) == (augment("no_ewo"))))
@@ -888,9 +854,6 @@ question: ''
 subquestion: |
 	You have told us that you can afford to pay off this judgment through the wage garnishment order. The wage garnishment will continue until the judgment is paid off. If your financial circumstances change and you want to request a Claim of Exemption, please come back and fill out this interview again! If you learned about this judgment within the last six months and would like more information on **[setting aside a default judgment, click here. ](https://jcc.prelive.opencities.com/Alpha-Services/Consumer-Debt/Protecting-Your-Income-and-Property )**
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(coe_yes) if defined("coe_yes") else Undefined())))
@@ -921,9 +884,6 @@ fields:
 		datatype: email
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(coe_yes) if defined("coe_yes") else Undefined())))
@@ -966,9 +926,6 @@ fields:
 		datatype: text
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(notice_type["levy_other"]) if defined("notice_type") else Undefined())))
@@ -980,9 +937,6 @@ fields:
 		datatype: yesnoradio
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(confirm_bank) if defined("confirm_bank") else Undefined())))
@@ -1010,9 +964,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(notice_date) if defined("notice_date") else Undefined())))
@@ -1032,9 +983,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(coe_yes) if defined("coe_yes") else Undefined())))
@@ -1059,9 +1007,6 @@ fields:
 		html: |
 			<span hidden data-variable data-event-type='input' id='where_to_send'/>
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 script: |
   <script>
     // Those fields which should be conditionally shown
@@ -1195,9 +1140,6 @@ fields:
 		html: |
 			<span hidden data-variable data-event-type='input' id='paid_other_details'/>
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 script: |
   <script>
     // Those fields which should be conditionally shown
@@ -1339,9 +1281,6 @@ fields:
 			- "": "yes"
 			- "": "no"
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(married) if defined("married") else Undefined()) == (augment("Yes"))))
@@ -1361,9 +1300,6 @@ fields:
 		datatype: text
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
@@ -1387,9 +1323,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
@@ -1413,9 +1346,6 @@ fields:
 		datatype: number
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
@@ -1439,9 +1369,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(dependents_yesno) if defined("dependents_yesno") else Undefined()) == (augment("yes"))))
@@ -1465,9 +1392,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -1476,9 +1400,6 @@ subquestion: |
 	Now we are going to ask some questions about your monthly income. It will be helpful if you have a paystub available to answer the next set of questions. Click continue once you have located your paystub.
 field: paystub
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -1514,9 +1435,6 @@ fields:
 		datatype: number
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -1528,9 +1446,6 @@ fields:
 		datatype: yesnoradio
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -1552,9 +1467,6 @@ fields:
 		datatype: currency
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(prop_yesnos["bank_yes"]) if defined("prop_yesnos") else Undefined())))
@@ -1578,9 +1490,6 @@ fields:
 		datatype: number
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(prop_yesnos["cars_yes"]) if defined("prop_yesnos") else Undefined())))
@@ -1612,9 +1521,6 @@ fields:
 		datatype: number
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(prop_yesnos["realprop_yes"]) if defined("prop_yesnos") else Undefined())))
@@ -1626,9 +1532,6 @@ fields:
 		datatype: number
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(prop_yesnos["fancy_stuff_yes"]) if defined("prop_yesnos") else Undefined())))
@@ -1644,9 +1547,6 @@ fields:
 		datatype: number
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -1706,9 +1606,6 @@ fields:
 		datatype: number
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -1728,9 +1625,6 @@ fields:
 			- "Other monthly installment payments": "other_install"
 		none of the above: False
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(installments["student_loans"]) if defined("installments") else Undefined())))
@@ -1754,9 +1648,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(installments["car_pymt"]) if defined("installments") else Undefined())))
@@ -1780,9 +1671,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(installments["credit_cards"]) if defined("installments") else Undefined())))
@@ -1806,9 +1694,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(installments["loan1"]) if defined("installments") else Undefined())))
@@ -1832,9 +1717,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(installments["medical"]) if defined("installments") else Undefined())))
@@ -1858,9 +1740,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(installments["other_install"]) if defined("installments") else Undefined())))
@@ -1884,9 +1763,6 @@ fields:
 		datatype: text
 		required: false
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	((((augment(ewo_options) if defined("ewo_options") else Undefined()) == (augment("full_exempt")))).logical_or(((augment(ewo_options) if defined("ewo_options") else Undefined()) == (augment("partial_exempt")))))
@@ -1925,9 +1801,6 @@ fields:
 		html: |
 			<span hidden data-variable data-event-type='input' id='fso_already_amt'/>
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 script: |
   <script>
     // Those fields which should be conditionally shown
@@ -2047,9 +1920,6 @@ subquestion: |
 signature: def_sig
 under: |
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(financial_yes) if defined("financial_yes") else Undefined())))
@@ -2072,9 +1942,6 @@ fields:
 		datatype: date
 		required: true
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(married) if defined("married") else Undefined()) == (augment("Yes"))))
@@ -2084,9 +1951,6 @@ subquestion: |
 signature: spouse_sig
 under: |
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 mandatory: |
 	(((augment(coe_yes) if defined("coe_yes") else Undefined())))
@@ -2107,9 +1971,6 @@ subquestion: |
 attachment code: |
 	filter(bool, [ternary(notice_type["bank_notice"], Bank_Levy_Claim_of_Exemption_a3ec4868fa73, ""), ternary(notice_type["ewo_notice"], Wage_Garnishment_Claim_of_Exemption_f3c5e36e228a, ""), ternary(financial_yes, Financial_Statement_7f40b808a533, "")])
 allow emailing: False
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
 code: |
 	coe_yes = ((((augment(notice_type["bank_notice"]))).logical_or((augment(notice_type["ewo_notice"])))).logical_or((augment(notice_type["levy_other"])))).primitive_value()
@@ -2275,7 +2136,4 @@ question: ''
 subquestion: |
 	Thank you for using this app. Your session is complete.
 
-under: |
-	<hr/>
-	Powered by [Community.lawyer](https://community.lawyer/), a public benefit company.
 ---
