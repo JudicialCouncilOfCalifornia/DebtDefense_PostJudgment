@@ -1,7 +1,7 @@
 ---
 modules:
-	- docassemble.base.util
-  - docassemble.jcc.abilitytopay.a2papi
+- docassemble.base.util
+- docassemble.jcc.abilitytopay.a2papi
 ---
 features:
   bootstrap theme: style.css
@@ -524,7 +524,7 @@ script: |
 
     // We need to be able to map in-page checkbox labels to their actual values
     var checkboxLabelsAndValues = {
-      
+
     }
 
     var showIfCallbacks = [
@@ -2135,5 +2135,3 @@ mandatory: |
 question: ''
 subquestion: |
 	Thank you for using this app. Your session is complete.
-
----
