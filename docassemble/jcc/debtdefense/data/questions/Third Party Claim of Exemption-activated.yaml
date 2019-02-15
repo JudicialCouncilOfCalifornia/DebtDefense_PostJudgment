@@ -1,6 +1,6 @@
 ---
 modules:
-	- docassemble.base.util
+- docassemble.base.util
 ---
 initial: True
 code: |
@@ -414,7 +414,7 @@ fields:
 		required: true
 
 	- "": variable_4
-		datatype: 
+		datatype:
 		required: true
 
 	- "County the court case was filed in": County
