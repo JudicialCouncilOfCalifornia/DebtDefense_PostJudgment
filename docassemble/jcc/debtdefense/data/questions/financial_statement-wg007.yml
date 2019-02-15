@@ -1,6 +1,6 @@
 ---
 modules:
-	- docassemble.base.util
+- docassemble.base.util
 ---
 initial: True
 code: |
@@ -394,8 +394,6 @@ mandatory: |
 	True
 question: ''
 subquestion: |
-
-
 
 	**Welcome!** You are working on a claim of exemption because you are a working person and you need your income to help support yourself and your family.
 
